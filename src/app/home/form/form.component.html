@@ -1,1 +1,54 @@
-<div></div>
+<mat-card class="form-card">
+  <mat-card-title>Formulário para compra de pacotes de adesivos</mat-card-title>
+  <mat-card-content>
+    <form>
+      <section class="checkbox-section">
+        <h3>Quais adesivos:</h3>
+        <p>
+          <mat-checkbox formControlName="react">React</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox formControlName="vue">Vue</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox formControlName="angular">Angular</mat-checkbox>
+        </p>
+      </section>
+      <section>
+        <h3>Quantos adesivos de cada ?</h3>
+        <div>
+          <button mat-icon-button>
+            <mat-icon>remove</mat-icon>
+          </button>
+          <mat-form-field
+            color="accent"
+            appearance="standard"
+            class="number-input-field"
+          >
+            <input matInput type="number" />
+          </mat-form-field>
+          <button mat-icon-button>
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </section>
+      <section>
+        <h3>Observações:</h3>
+        <mat-form-field
+          class="text-form-field"
+          appearance="fill"
+          color="accent"
+        >
+          <mat-label>Alguma dúvida ? Recado ?</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </section>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-stroked-button class="submit-button" color="accent">
+      Enviar
+    </button>
+  </mat-card-actions>
+  <mat-card-footer> </mat-card-footer>
+</mat-card>

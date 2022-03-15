@@ -1,3 +1,37 @@
 .form-card {
-  max-width: 40vw;
+  min-width: 40vw;
+  padding: 30px 50px;
+
+  .checkbox-section {
+    margin: 20px 0;
+  }
+
+  .number-input-field {
+    max-width: 50px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .text-form-field {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .submit-button {
+    font-size: 14px;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 }
