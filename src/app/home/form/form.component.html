@@ -1,8 +1,8 @@
 <mat-card class="form-card">
   <mat-card-title>Formulário para compra de pacotes de adesivos</mat-card-title>
   <mat-card-content>
-    <form>
-      <section class="checkbox-section">
+    <form [formGroup]="stickersForm">
+      <section class="form-section">
         <h3>Quais adesivos:</h3>
         <p>
           <mat-checkbox formControlName="react">React</mat-checkbox>
@@ -14,10 +14,10 @@
           <mat-checkbox formControlName="angular">Angular</mat-checkbox>
         </p>
       </section>
-      <section>
+      <section class="form-section">
         <h3>Quantos adesivos de cada ?</h3>
         <div>
-          <button mat-icon-button>
+          <button mat-icon-button (click)="decrement()">
             <mat-icon>remove</mat-icon>
           </button>
           <mat-form-field
@@ -25,14 +25,25 @@
             appearance="standard"
             class="number-input-field"
           >
-            <input matInput type="number" />
+            <input
+              matInput
+              type="number"
+              maxlength="4"
+              formControlName="quantity"
+            />
           </mat-form-field>
-          <button mat-icon-button>
+          <button mat-icon-button (click)="increment()">
             <mat-icon>add</mat-icon>
           </button>
         </div>
+        <mat-error @fade *ngIf="quantity.errors?.['required']">
+          Campo <strong>obrigatório</strong>
+        </mat-error>
+        <mat-error @fade *ngIf="quantity.errors?.['min']">
+          Valor deve ser maior que <strong>1</strong>
+        </mat-error>
       </section>
-      <section>
+      <section class="form-section">
         <h3>Observações:</h3>
         <mat-form-field
           class="text-form-field"
@@ -40,13 +51,19 @@
           color="accent"
         >
           <mat-label>Alguma dúvida ? Recado ?</mat-label>
-          <textarea matInput></textarea>
+          <textarea matInput formControlName="comments"></textarea>
         </mat-form-field>
       </section>
     </form>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-stroked-button class="submit-button" color="accent">
+    <button
+      mat-stroked-button
+      class="submit-button"
+      color="accent"
+      [disabled]="!canSubmit"
+      (click)="onSubmit()"
+    >
       Enviar
     </button>
   </mat-card-actions>
