@@ -2,7 +2,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { SucccesSnackBarComponent } from 'src/app/shared/succces-snack-bar/succces-snack-bar.component';
 import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
 export interface OrderView {
@@ -54,7 +56,11 @@ export class FormComponent implements OnInit, OnDestroy {
     );
   }
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {}
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.stickersForm = this.fb.group({
@@ -88,9 +94,18 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const dialogSubmitSub =
       dialogRef.componentInstance.orderConfirmed.subscribe((order) => {
+        this.openSnackBar();
         console.log({ order });
         dialogSubmitSub.unsubscribe();
       });
+  }
+
+  openSnackBar() {
+    const durationInSeconds = 5;
+
+    this.snackBar.openFromComponent(SucccesSnackBarComponent, {
+      duration: durationInSeconds * 1000,
+    });
   }
 
   increment() {

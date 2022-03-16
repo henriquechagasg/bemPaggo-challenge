@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { SucccesSnackBarComponent } from './succces-snack-bar/succces-snack-bar.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { MaterialModule } from '../material/material.module';
     // Material
     MaterialModule,
   ],
-  declarations: [],
+  declarations: [SucccesSnackBarComponent],
   exports: [
     // Angular
     CommonModule,
