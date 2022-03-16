@@ -18,8 +18,6 @@ export class ProgressBarComponent implements OnInit {
   ngOnInit(): void {
     this.progressSub = this.progressBarService.progress.subscribe(
       (progress) => {
-        console.log(progress);
-
         if (progress !== 0) {
           this.isLoading = true;
         }

@@ -95,7 +95,7 @@ export class FormComponent implements OnInit, OnDestroy {
     });
 
     const dialogSubmitSub =
-      dialogRef.componentInstance.orderConfirmed.subscribe((order) => {
+      dialogRef.componentInstance.orderConfirmed.subscribe(() => {
         const source$ = interval(1);
         const sourceSub = source$.subscribe((val) => {
           const maxInterval = 200;
@@ -108,6 +108,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
           if (intervalIsReached) {
             this.openSnackBar();
+            this._resetForm();
             sourceSub.unsubscribe();
             dialogSubmitSub.unsubscribe();
           }
@@ -121,6 +122,11 @@ export class FormComponent implements OnInit, OnDestroy {
     this.snackBar.openFromComponent(SucccesSnackBarComponent, {
       duration: durationInSeconds * 1000,
     });
+  }
+
+  private _resetForm() {
+    this.stickersForm.reset();
+    this.stickersForm.patchValue({ quantity: 1 });
   }
 
   increment() {

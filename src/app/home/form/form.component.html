@@ -1,7 +1,18 @@
 <mat-card class="form-card">
-  <mat-card-title>Formulário para compra de pacotes de adesivos</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="stickersForm">
+    <div class="card-header">
+      <div class="title">
+        <h1>Formulário para compra de <strong>adesivos</strong></h1>
+      </div>
+
+      <img
+        src="../../../assets/logos/box-logo.png"
+        class="box-logo"
+        alt="box-logo"
+      />
+    </div>
+
+    <form class="form-layer" [formGroup]="stickersForm">
       <section class="form-section">
         <h3>Quais adesivos:</h3>
         <p>
@@ -59,7 +70,8 @@
       </section>
     </form>
   </mat-card-content>
-  <mat-card-actions align="end">
+
+  <mat-card-actions align="end" class="actions-layer">
     <button
       mat-stroked-button
       class="submit-button"
@@ -70,5 +82,4 @@
       Enviar
     </button>
   </mat-card-actions>
-  <mat-card-footer> </mat-card-footer>
 </mat-card>
