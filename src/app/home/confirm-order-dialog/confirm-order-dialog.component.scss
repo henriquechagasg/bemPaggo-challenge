@@ -1,0 +1,14 @@
+@import "breakpoints";
+
+.dialog-container {
+  max-width: 500px;
+  width: 70vw;
+
+  .dialog-section {
+    margin: 10px 0px;
+  }
+
+  .confirm-button {
+    font-size: 14px;
+  }
+}

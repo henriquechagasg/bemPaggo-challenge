@@ -1,27 +1,55 @@
+@import "breakpoints";
+
 .form-card {
-  min-width: 40vw;
-  padding: 30px 50px;
+  width: 80vw;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+  padding: 25px;
 
-  .form-section {
-    margin: 20px 0;
-  }
-
-  .number-input-field {
-    max-width: 50px;
-    font-size: 16px;
-    text-align: center;
-  }
-
-  .text-form-field {
-    font-size: 16px;
+  .card-header {
     width: 100%;
+    color: #69f0ae;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      max-width: 250px;
+      text-align: left;
+    }
+
+    .box-logo {
+      height: 70px;
+    }
   }
 
-  .submit-button {
-    font-size: 14px;
-    padding: 5px 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+  .form-layer {
+    .form-section {
+      margin: 20px 0px;
+    }
+
+    .number-input-field {
+      max-width: 50px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .text-form-field {
+      font-size: 16px;
+      width: 100%;
+    }
+  }
+
+  .actions-layer {
+    margin: 0px;
+
+    .submit-button {
+      font-size: 14px;
+      padding: 5px 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
   }
 
   input::-webkit-outer-spin-button,

@@ -1,0 +1,34 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>Confirmar pedido</h1>
+  <div mat-dialog-content>
+    <section class="dialog-section">
+      <h3>Adesivos</h3>
+      <mat-chip-list>
+        <mat-chip
+          color="accent"
+          selected
+          *ngFor="let sticker of order.stickers"
+        >
+          {{ sticker }}
+        </mat-chip>
+      </mat-chip-list>
+    </section>
+    <section class="dialog-section">
+      <h3>Quantidade: {{ order.quantity }}</h3>
+    </section>
+    <section class="dialog-section" *ngIf="order.comment">
+      <h3>Observações:</h3>
+      <span>{{ order.comment }}</span>
+    </section>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      class="confirm-button"
+      (click)="confirm()"
+    >
+      Confirmar
+    </button>
+  </div>
+</div>

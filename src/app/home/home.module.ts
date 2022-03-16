@@ -4,6 +4,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormComponent } from './form/form.component';
+import { ConfirmOrderDialogComponent } from './confirm-order-dialog/confirm-order-dialog.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { FormComponent } from './form/form.component';
     // Shared
     SharedModule,
   ],
-  declarations: [HomeComponent, FormComponent],
+  declarations: [HomeComponent, FormComponent, ConfirmOrderDialogComponent],
 })
 export class HomeModule {}
