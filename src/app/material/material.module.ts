@@ -5,6 +5,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
 
 const MaterialComponents = [
   MatCardModule,
@@ -13,6 +15,8 @@ const MaterialComponents = [
   MatInputModule,
   MatFormFieldModule,
   MatIconModule,
+  MatDialogModule,
+  MatChipsModule,
 ];
 
 @NgModule({ exports: [MaterialComponents] })

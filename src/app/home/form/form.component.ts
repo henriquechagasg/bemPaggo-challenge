@@ -1,9 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
-interface OrderView {
+export interface OrderView {
   stickers: string[];
   quantity: number;
   comment: string;
@@ -52,7 +54,7 @@ export class FormComponent implements OnInit, OnDestroy {
     );
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.stickersForm = this.fb.group({
@@ -80,7 +82,15 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.order);
+    const dialogRef = this.dialog.open(ConfirmOrderDialogComponent, {
+      data: { order: this.order },
+    });
+
+    const dialogSubmitSub =
+      dialogRef.componentInstance.orderConfirmed.subscribe((order) => {
+        console.log({ order });
+        dialogSubmitSub.unsubscribe();
+      });
   }
 
   increment() {
