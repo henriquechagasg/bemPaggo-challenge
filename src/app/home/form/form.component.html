@@ -34,7 +34,7 @@
           >
             <input
               matInput
-              type="number"
+              type="phone"
               maxlength="4"
               formControlName="quantity"
             />
@@ -50,7 +50,7 @@
           Campo <strong>obrigatório</strong>
         </mat-error>
         <mat-error @fade *ngIf="quantity.touched && quantity.errors?.['min']">
-          Valor deve ser maior que <strong>1</strong>
+          Valor deve ser maior que <strong>0</strong>
         </mat-error>
       </section>
       <section class="form-section">

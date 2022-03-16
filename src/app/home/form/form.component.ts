@@ -96,9 +96,9 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const dialogSubmitSub =
       dialogRef.componentInstance.orderConfirmed.subscribe(() => {
-        const source$ = interval(1);
+        const source$ = interval(40);
         const sourceSub = source$.subscribe((val) => {
-          const maxInterval = 200;
+          const maxInterval = 10;
 
           const intervalIsReached = val >= maxInterval;
 
