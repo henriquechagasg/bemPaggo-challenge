@@ -1,6 +1,9 @@
+@import "breakpoints";
+
 .form-card {
-  min-width: 40vw;
-  padding: 30px 50px;
+  width: 80vw;
+  max-width: 600px;
+  padding: 25px 25px;
 
   .form-section {
     margin: 20px 0;

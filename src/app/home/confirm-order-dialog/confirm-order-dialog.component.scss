@@ -1,5 +1,8 @@
+@import "breakpoints";
+
 .dialog-container {
-  width: 500px;
+  max-width: 500px;
+  width: 70vw;
 
   .dialog-section {
     margin: 20px 0px;
