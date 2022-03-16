@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const MaterialComponents = [
   MatCardModule,
@@ -19,6 +20,7 @@ const MaterialComponents = [
   MatDialogModule,
   MatChipsModule,
   MatSnackBarModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({ exports: [MaterialComponents] })

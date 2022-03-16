@@ -3,7 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { interval, Subscription, timer } from 'rxjs';
+import { ProgressBarService } from 'src/app/core/services/progress-bar.service';
 import { SucccesSnackBarComponent } from 'src/app/shared/succces-snack-bar/succces-snack-bar.component';
 import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
@@ -59,7 +60,8 @@ export class FormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private progressBarService: ProgressBarService
   ) {}
 
   ngOnInit(): void {
@@ -94,14 +96,27 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const dialogSubmitSub =
       dialogRef.componentInstance.orderConfirmed.subscribe((order) => {
-        this.openSnackBar();
-        console.log({ order });
-        dialogSubmitSub.unsubscribe();
+        const source$ = interval(1);
+        const sourceSub = source$.subscribe((val) => {
+          const maxInterval = 200;
+
+          const intervalIsReached = val >= maxInterval;
+
+          const progress = Math.floor((val / maxInterval) * 100);
+
+          this.progressBarService.setProgress(progress);
+
+          if (intervalIsReached) {
+            this.openSnackBar();
+            sourceSub.unsubscribe();
+            dialogSubmitSub.unsubscribe();
+          }
+        });
       });
   }
 
   openSnackBar() {
-    const durationInSeconds = 5;
+    const durationInSeconds = 3;
 
     this.snackBar.openFromComponent(SucccesSnackBarComponent, {
       duration: durationInSeconds * 1000,
