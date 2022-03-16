@@ -36,10 +36,13 @@
             <mat-icon>add</mat-icon>
           </button>
         </div>
-        <mat-error @fade *ngIf="quantity.errors?.['required']">
+        <mat-error
+          @fade
+          *ngIf="quantity.touched && quantity.errors?.['required']"
+        >
           Campo <strong>obrigatório</strong>
         </mat-error>
-        <mat-error @fade *ngIf="quantity.errors?.['min']">
+        <mat-error @fade *ngIf="quantity.touched && quantity.errors?.['min']">
           Valor deve ser maior que <strong>1</strong>
         </mat-error>
       </section>
@@ -50,8 +53,8 @@
           appearance="fill"
           color="accent"
         >
-          <mat-label>Alguma dúvida ? Recado ?</mat-label>
-          <textarea matInput formControlName="comments"></textarea>
+          <mat-label>Alguma dúvida? Recado?</mat-label>
+          <textarea matInput formControlName="comment"></textarea>
         </mat-form-field>
       </section>
     </form>

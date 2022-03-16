@@ -1,6 +1,13 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
+interface OrderView {
+  stickers: string[];
+  quantity: number;
+  comment: string;
+}
 
 @Component({
   selector: 'app-form',
@@ -10,15 +17,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     trigger('fade', [
       transition('void => *', [
         style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
+        animate(300, style({ opacity: 1 })),
       ]),
-      transition('* => void', [animate(200, style({ opacity: 0 }))]),
     ]),
   ],
 })
-export class FormComponent implements OnInit {
-  stickersForm: FormGroup = {} as FormGroup;
-  constructor(private fb: FormBuilder) {}
+export class FormComponent implements OnInit, OnDestroy {
+  stickersForm: FormGroup;
+
+  order: OrderView;
+
+  stickersFormSub: Subscription;
+
   public get react() {
     return this.stickersForm.get('react')!;
   }
@@ -42,22 +52,35 @@ export class FormComponent implements OnInit {
     );
   }
 
+  constructor(private fb: FormBuilder) {}
+
   ngOnInit(): void {
     this.stickersForm = this.fb.group({
       react: [false, [Validators.required]],
       vue: [false, [Validators.required]],
       angular: [false, [Validators.required]],
       quantity: [1, [Validators.required, Validators.min(1)]],
-      comments: [''],
+      comment: [''],
     });
 
-    this.stickersForm.valueChanges.subscribe(() => {
-      console.log(this.quantity);
+    this.stickersFormSub = this.stickersForm.valueChanges.subscribe((value) => {
+      const { react, angular, vue, ...props } = value;
+
+      this.order = {
+        ...props,
+        stickers: [react && 'React', angular && 'Angular', vue && 'Vue'].filter(
+          (item) => item
+        ),
+      };
     });
   }
 
+  ngOnDestroy(): void {
+    this.stickersFormSub.unsubscribe();
+  }
+
   onSubmit() {
-    console.log(this.stickersForm.value);
+    console.log(this.order);
   }
 
   increment() {
@@ -65,7 +88,7 @@ export class FormComponent implements OnInit {
   }
 
   decrement() {
-    if (this.quantity?.value > 1) {
+    if (this.quantity.value > 1) {
       this.stickersForm.patchValue({ quantity: this.quantity.value - 1 });
     }
   }
