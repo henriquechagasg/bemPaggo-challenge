@@ -1,11 +1,17 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { interval, Subscription, timer } from 'rxjs';
 import { ProgressBarService } from 'src/app/core/services/progress-bar.service';
 import { SucccesSnackBarComponent } from 'src/app/shared/succces-snack-bar/succces-snack-bar.component';
+import { minimunOneCheckboxValidator } from 'src/app/shared/utils/validators/minimunOneCheckboxValidator';
 import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
 export interface OrderView {
@@ -35,26 +41,19 @@ export class FormComponent implements OnInit, OnDestroy {
   stickersFormSub: Subscription;
 
   public get react() {
-    return this.stickersForm.get('react')!;
+    return this.stickersForm.get('stickers.react')!;
   }
 
   public get vue() {
-    return this.stickersForm.get('vue')!;
+    return this.stickersForm.get('stickers.vue')!;
   }
 
   public get angular() {
-    return this.stickersForm.get('angular')!;
+    return this.stickersForm.get('stickers.angular')!;
   }
 
   public get quantity() {
     return this.stickersForm.get('quantity')!;
-  }
-
-  public get canSubmit() {
-    return (
-      (this.react.value || this.vue.value || this.angular.value) &&
-      this.quantity?.value >= 1
-    );
   }
 
   constructor(
@@ -62,19 +61,29 @@ export class FormComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private progressBarService: ProgressBarService
-  ) {}
+  ) {
+    this.stickersForm = new FormGroup({
+      stickers: new FormGroup(
+        {
+          react: new FormControl(false),
+          vue: new FormControl(false),
+          angular: new FormControl(false),
+        },
+        minimunOneCheckboxValidator()
+      ),
+      quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
+      comment: new FormControl(''),
+    });
+  }
 
   ngOnInit(): void {
-    this.stickersForm = this.fb.group({
-      react: [false, [Validators.required]],
-      vue: [false, [Validators.required]],
-      angular: [false, [Validators.required]],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      comment: [''],
-    });
-
     this.stickersFormSub = this.stickersForm.valueChanges.subscribe((value) => {
-      const { react, angular, vue, ...props } = value;
+      console.log({ valid: this.stickersForm.valid });
+
+      const {
+        stickers: { react, angular, vue },
+        ...props
+      } = value;
 
       this.order = {
         ...props,
@@ -130,12 +139,20 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   increment() {
-    this.stickersForm.patchValue({ quantity: this.quantity.value + 1 });
+    return this.quantity.value < 1
+      ? this.stickersForm.patchValue({
+          quantity: 1,
+        })
+      : this.stickersForm.patchValue({
+          quantity: Number(this.quantity.value) + 1,
+        });
   }
 
   decrement() {
     if (this.quantity.value > 1) {
-      this.stickersForm.patchValue({ quantity: this.quantity.value - 1 });
+      this.stickersForm.patchValue({
+        quantity: Number(this.quantity.value) - 1,
+      });
     }
   }
 }
