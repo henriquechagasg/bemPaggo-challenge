@@ -8,8 +8,8 @@
       <img src="assets/logos/box-logo.png" class="box-logo" alt="box-logo" />
     </div>
 
-    <form class="form-layer" [formGroup]="stickersForm">
-      <section class="form-section">
+    <form id="stickersForm" class="form-layer" [formGroup]="stickersForm">
+      <section class="form-section" formGroupName="stickers">
         <h3>Quais adesivos:</h3>
         <p>
           <mat-checkbox formControlName="react">React</mat-checkbox>
@@ -24,7 +24,7 @@
       <section class="form-section">
         <h3>Quantos adesivos de cada ?</h3>
         <div>
-          <button mat-icon-button (click)="decrement()">
+          <button mat-icon-button id="decreaseBtn" (click)="decrement()">
             <mat-icon>remove</mat-icon>
           </button>
           <mat-form-field
@@ -34,12 +34,12 @@
           >
             <input
               matInput
-              type="number"
+              type="phone"
               maxlength="4"
               formControlName="quantity"
             />
           </mat-form-field>
-          <button mat-icon-button (click)="increment()">
+          <button mat-icon-button id="increaseBtn" (click)="increment()">
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -50,7 +50,7 @@
           Campo <strong>obrigatório</strong>
         </mat-error>
         <mat-error @fade *ngIf="quantity.touched && quantity.errors?.['min']">
-          Valor deve ser maior que <strong>1</strong>
+          Valor deve ser maior que <strong>0</strong>
         </mat-error>
       </section>
       <section class="form-section">
@@ -72,8 +72,9 @@
       mat-stroked-button
       class="submit-button"
       color="accent"
-      [disabled]="!canSubmit"
+      [disabled]="!stickersForm.valid"
       (click)="onSubmit()"
+      id="submitBtn"
     >
       Enviar
     </button>

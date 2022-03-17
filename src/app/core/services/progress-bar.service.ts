@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ProgressBarService {
-  private isLoading$ = new BehaviorSubject<boolean>(true);
+  private isLoading$ = new BehaviorSubject<boolean>(false);
   private progress$ = new BehaviorSubject<number>(0);
 
   isLoading = this.isLoading$.asObservable();
