@@ -1,4 +1,4 @@
-describe('Form test', () => {
+describe('Form validation tests', () => {
   before(() => {
     cy.visit('/');
   });
