@@ -78,8 +78,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.stickersFormSub = this.stickersForm.valueChanges.subscribe((value) => {
-      console.log({ valid: this.stickersForm.valid });
-
       const {
         stickers: { react, angular, vue },
         ...props
