@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProgressBarService } from 'src/app/core/services/progress-bar.service';
 
@@ -7,27 +7,46 @@ import { ProgressBarService } from 'src/app/core/services/progress-bar.service';
   templateUrl: './progress-bar.component.html',
   styleUrls: ['./progress-bar.component.scss'],
 })
-export class ProgressBarComponent implements OnInit {
+export class ProgressBarComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   progress: number;
 
-  progressSub: Subscription;
+  subscriptions: Subscription[] = [];
 
   constructor(private progressBarService: ProgressBarService) {}
 
   ngOnInit(): void {
-    this.progressSub = this.progressBarService.progress.subscribe(
+    const isLoadingSub = this.progressBarService.isLoading.subscribe(
+      (isLoading) => {
+        this.isLoading = isLoading;
+      }
+    );
+
+    const progressSub = this.progressBarService.progress.subscribe(
       (progress) => {
-        if (progress !== 0) {
-          this.isLoading = true;
+        const initialProgressValue = 0;
+
+        const finalProgressValue = 100;
+
+        if (progress !== initialProgressValue) {
+          this.progressBarService.setIsLoading(true);
         }
 
-        if (progress === 100) {
-          this.isLoading = false;
-          this.progressBarService.setProgress(0);
+        if (progress === finalProgressValue) {
+          setTimeout(() => {
+            this.progressBarService.setIsLoading(false);
+            this.progressBarService.setProgress(initialProgressValue);
+          }, 300);
         }
+
         this.progress = progress;
       }
     );
+
+    this.subscriptions.push(isLoadingSub, progressSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

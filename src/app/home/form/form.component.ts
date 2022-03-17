@@ -3,7 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { interval, Subscription, timer } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
+import { take, finalize } from 'rxjs/operators';
 import { ProgressBarService } from 'src/app/core/services/progress-bar.service';
 import { SucccesSnackBarComponent } from 'src/app/shared/components/succces-snack-bar/succces-snack-bar.component';
 import { minimunOneCheckboxValidator } from 'src/app/shared/validators/minimunOneCheckboxValidator';
@@ -97,22 +98,21 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const dialogSubmitSub =
       dialogRef.componentInstance.orderConfirmed.subscribe(() => {
-        const source$ = interval(40);
-        const sourceSub = source$.subscribe((val) => {
-          const maxInterval = 10;
+        const interval$ = interval(80);
 
-          const intervalIsReached = val >= maxInterval;
-
-          const progress = Math.floor((val / maxInterval) * 100);
-
-          this.progressBarService.setProgress(progress);
-
-          if (intervalIsReached) {
+        const takeInterval = interval$.pipe(
+          take(10),
+          finalize(() => {
             this.openSnackBar();
             this._resetForm();
-            sourceSub.unsubscribe();
             dialogSubmitSub.unsubscribe();
-          }
+          })
+        );
+
+        takeInterval.subscribe((value) => {
+          const currentProgress = (value + 1) * 10;
+
+          this.progressBarService.setProgress(currentProgress);
         });
       });
   }
