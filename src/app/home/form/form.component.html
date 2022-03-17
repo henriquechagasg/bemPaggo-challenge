@@ -24,7 +24,7 @@
       <section class="form-section">
         <h3>Quantos adesivos de cada ?</h3>
         <div>
-          <button mat-icon-button (click)="decrement()">
+          <button mat-icon-button id="decreaseBtn" (click)="decrement()">
             <mat-icon>remove</mat-icon>
           </button>
           <mat-form-field
@@ -39,7 +39,7 @@
               formControlName="quantity"
             />
           </mat-form-field>
-          <button mat-icon-button (click)="increment()">
+          <button mat-icon-button id="increaseBtn" (click)="increment()">
             <mat-icon>add</mat-icon>
           </button>
         </div>

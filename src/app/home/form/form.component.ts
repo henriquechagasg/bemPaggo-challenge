@@ -1,17 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { interval, Subscription, timer } from 'rxjs';
 import { ProgressBarService } from 'src/app/core/services/progress-bar.service';
-import { SucccesSnackBarComponent } from 'src/app/shared/succces-snack-bar/succces-snack-bar.component';
-import { minimunOneCheckboxValidator } from 'src/app/shared/utils/validators/minimunOneCheckboxValidator';
+import { SucccesSnackBarComponent } from 'src/app/shared/components/succces-snack-bar/succces-snack-bar.component';
+import { minimunOneCheckboxValidator } from 'src/app/shared/validators/minimunOneCheckboxValidator';
 import { ConfirmOrderDialogComponent } from '../confirm-order-dialog/confirm-order-dialog.component';
 
 export interface OrderView {
@@ -57,7 +52,6 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private fb: FormBuilder,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private progressBarService: ProgressBarService
