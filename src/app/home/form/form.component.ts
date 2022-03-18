@@ -144,7 +144,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   increment() {
-    return this.quantity.value < 1 || typeof this.quantity.value !== 'number'
+    return this.quantity.value < 1 || isNaN(Number(this.quantity.value))
       ? this.stickersForm.patchValue({
           quantity: 1,
         })
