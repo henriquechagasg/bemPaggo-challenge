@@ -36,6 +36,10 @@ export class FormComponent implements OnInit, OnDestroy {
 
   stickersFormSub: Subscription;
 
+  public get stickers() {
+    return this.stickersForm.get('stickers')!;
+  }
+
   public get react() {
     return this.stickersForm.get('stickers.react')!;
   }
@@ -66,13 +70,19 @@ export class FormComponent implements OnInit, OnDestroy {
         },
         minimunOneCheckboxValidator()
       ),
-      quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
+      quantity: new FormControl(1, [
+        Validators.required,
+        Validators.min(1),
+        Validators.pattern(/^[0-9]*$/),
+      ]),
       comment: new FormControl(''),
     });
   }
 
   ngOnInit(): void {
     this.stickersFormSub = this.stickersForm.valueChanges.subscribe((value) => {
+      console.log(this.stickersForm);
+
       const {
         stickers: { react, angular, vue },
         ...props
@@ -131,7 +141,7 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   increment() {
-    return this.quantity.value < 1
+    return this.quantity.value < 1 || typeof this.quantity.value !== 'number'
       ? this.stickersForm.patchValue({
           quantity: 1,
         })

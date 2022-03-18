@@ -20,6 +20,14 @@
         <p>
           <mat-checkbox formControlName="angular">Angular</mat-checkbox>
         </p>
+        <mat-error
+          @fade
+          *ngIf="
+            stickers.touched && stickers.errors?.['requireCheckboxesToBeChecked']
+          "
+        >
+          Selecione pelo menos um
+        </mat-error>
       </section>
       <section class="form-section">
         <h3>Quantos adesivos de cada ?</h3>
@@ -51,6 +59,12 @@
         </mat-error>
         <mat-error @fade *ngIf="quantity.touched && quantity.errors?.['min']">
           Valor deve ser maior que <strong>0</strong>
+        </mat-error>
+        <mat-error
+          @fade
+          *ngIf="quantity.touched && quantity.errors?.['pattern']"
+        >
+          Digite apenas números
         </mat-error>
       </section>
       <section class="form-section">
