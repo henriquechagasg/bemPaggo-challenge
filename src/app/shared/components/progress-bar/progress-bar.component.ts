@@ -24,21 +24,6 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
 
     const progressSub = this.progressBarService.progress.subscribe(
       (progress) => {
-        const initialProgressValue = 0;
-
-        const finalProgressValue = 100;
-
-        if (progress !== initialProgressValue) {
-          this.progressBarService.setIsLoading(true);
-        }
-
-        if (progress === finalProgressValue) {
-          setTimeout(() => {
-            this.progressBarService.setIsLoading(false);
-            this.progressBarService.setProgress(initialProgressValue);
-          }, 300);
-        }
-
         this.progress = progress;
       }
     );

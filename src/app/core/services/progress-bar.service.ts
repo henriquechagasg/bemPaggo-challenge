@@ -11,6 +11,7 @@ export class ProgressBarService {
   progress = this.progress$.asObservable();
 
   setIsLoading(value: boolean): void {
+    this.progress$.next(0);
     this.isLoading$.next(value);
   }
 

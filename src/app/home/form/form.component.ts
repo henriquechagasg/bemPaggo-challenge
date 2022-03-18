@@ -108,11 +108,14 @@ export class FormComponent implements OnInit, OnDestroy {
 
     const dialogSubmitSub =
       dialogRef.componentInstance.orderConfirmed.subscribe(() => {
+        this.progressBarService.setIsLoading(true);
+
         const interval$ = interval(80);
 
         const takeInterval = interval$.pipe(
-          take(10),
+          take(14),
           finalize(() => {
+            this.progressBarService.setIsLoading(false);
             this.openSnackBar();
             this._resetForm();
             dialogSubmitSub.unsubscribe();
