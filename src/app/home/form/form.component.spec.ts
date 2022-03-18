@@ -103,26 +103,37 @@ describe('FormComponent', () => {
 
   it('stickers form should be invalid when any checkboxes are selected', () => {
     component.stickersForm.patchValue(formConditions.noCheckBoxSelection);
-    expect(component.stickersForm.valid).toBeFalse();
-  });
 
-  it('stickers form should be invalid when any checkboxes are selected', () => {
-    component.stickersForm.patchValue(formConditions.noCheckBoxSelection);
+    expect(
+      component.stickers.errors?.['requireCheckboxesToBeChecked']
+    ).toBeTruthy();
+
     expect(component.stickersForm.valid).toBeFalse();
   });
 
   it('stickers form should be invalid when quanity value is empty', () => {
     component.stickersForm.patchValue(formConditions.emptyQuantity);
+
+    expect(component.quantity.errors?.['required']).toBeTruthy();
+
     expect(component.stickersForm.valid).toBeFalse();
   });
 
   it('stickers form should be invalid when quanity value is negative', () => {
     component.stickersForm.patchValue(formConditions.negativeQuantity);
+
+    expect(component.quantity.errors?.['min']).toBeTruthy();
+
     expect(component.stickersForm.valid).toBeFalse();
   });
 
   it('stickers form should be invalid when quanity value is not a number', () => {
     component.stickersForm.patchValue(formConditions.notNumberQuantity);
+
+    console.log({ formTest: formConditions.notNumberQuantity });
+
+    expect(component.quantity.errors?.['pattern']).toBeTruthy();
+
     expect(component.stickersForm.valid).toBeFalse();
   });
 
